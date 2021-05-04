@@ -106,5 +106,6 @@ def main():
     print_calendar(json_data)
     sys.exit(os.EX_OK)
 
+
 if __name__ == "__main__":
     main()
