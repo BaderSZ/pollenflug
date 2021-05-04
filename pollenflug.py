@@ -31,6 +31,20 @@ Licensed under the GPL-3.0, (c) 2021 Bader Zaidan.
 For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
 
+def format_color(s):
+    GREEN = '\033[92m'
+    ORANGE = '\033[93m'
+    RED = '\033[91m'
+    ENDC = '\033[0m'
+
+    if s == "0":
+        return GREEN+s+ENDC
+    elif s == "1" or s == "2":
+        return ORANGE+s+ENDC
+    elif s == "3":
+        return RED+s+ENDC
+
+
 def print_calendar(data):
     # Print top Bar:
     print("Date\t", end="\t")
@@ -43,7 +57,7 @@ def print_calendar(data):
         cdate = s
         print(cdate, end="\t")
         for v in data["content"]["values"][cdate]:
-            print(v, end="\t")
+            print(format_color(v), end="\t")
         print()
 
 
