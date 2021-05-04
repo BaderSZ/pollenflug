@@ -1,6 +1,8 @@
 # pollenflug
 CLI pollen/allergy calendar
 
+![Screenshot](img/screenshot.png)
+
 This script uses [Hexal's Pollenflugkalendar](https://allergie.hexal.de/pollenflug/vorhersage/) to fetch the predictions for the next week.
 
 Currently, the intensity is printed as a numerical value between 0 and 3: 0 being none, 3 being severe.
