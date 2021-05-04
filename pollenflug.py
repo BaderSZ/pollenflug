@@ -29,7 +29,10 @@ def print_help():
 By default, date is set to today and plz to Hamburg.
 Data is fetched from Hexal's Pollenflugkalendar.
 
-Licensed under the GPL-3.0, (c) 2021 Bader Zaidan.
+pollenflug  Copyright (C) 2021  Bader Zaidan
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions; read LICENSE for details.
 
 For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
