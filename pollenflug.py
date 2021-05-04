@@ -102,7 +102,7 @@ def main():
         print("\033[91mError\033[0m: Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
-    print("Data for ", plz, ", Germany")    
+    print("Data for " + plz + ", Germany")    
     print_calendar(json_data)
     sys.exit(os.EX_OK)
 
