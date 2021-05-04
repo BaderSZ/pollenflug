@@ -37,6 +37,7 @@ under certain conditions; read LICENSE for details.
 For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
 
+
 def format_color(s):
     """Give each pollen value an appropriate color in the table"""
     GREEN = '\033[92m'
