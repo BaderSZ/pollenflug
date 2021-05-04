@@ -1,5 +1,5 @@
 #!/bin/env python3
-
+"""This script/program fetches the pollen prediction calendar from Hexal and prints to CLI"""
 # Command line args and exit codes
 import sys
 import os
@@ -18,6 +18,7 @@ arg_list = sys.argv[1:]
 
 
 def print_help():
+    """Print help menu with argument, usage, copyright and Github"""
     print("""Usage: pollenflug.py [options]
 
     -h,--help               Print this help menu
@@ -34,6 +35,7 @@ For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
 
 def format_color(s):
+    """Give each pollen value an appropriate color in the table"""
     GREEN = '\033[92m'
     ORANGE = '\033[93m'
     RED = '\033[91m'
@@ -49,6 +51,7 @@ def format_color(s):
         return s
 
 def print_calendar(data):
+    """Print calendar as a table with appropriate spacing"""
     # Print top Bar:
     print("Date\t", end="\t")
     for s in data["content"]["pollen"]:
@@ -65,6 +68,7 @@ def print_calendar(data):
 
 
 def main():
+    """main() function, parse arguments and call functions"""
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
     plz = 20095
