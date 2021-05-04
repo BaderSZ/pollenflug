@@ -9,6 +9,9 @@ import getopt
 from datetime import datetime
 import requests
 
+# For dict/r.json type hinting
+from typing import Dict
+
 REQ_URL = "https://allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"
 ENG_LIST = ["Ambrosia","Dock","Artemisia","Birch","Beech","Oak","Alder","Ash","Grass","Hazel","Popplar","Rye","Elm","Plantain","Willow"]
 
@@ -17,7 +20,7 @@ SHORT_OPT = "d:p:hve"
 LONG_OPT  = ["date=", "plz=", "help", "verbose", "english"]
 arg_list = sys.argv[1:]
 
-def print_help():
+def print_help() -> None:
     """Print help menu with argument, usage, copyright and Github"""
     print("""Usage: pollenflug.py [options]
 
@@ -40,7 +43,7 @@ For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
 
 
-def format_color(s):
+def format_color(s: str) -> str:
     """Give each pollen value an appropriate color in the table"""
     GREEN = '\033[92m'
     ORANGE = '\033[93m'
@@ -56,7 +59,7 @@ def format_color(s):
     else:
         return s
 
-def print_calendar(data, eng=False):
+def print_calendar(data: Dict, eng: bool = False):
     """Print calendar as a table with appropriate spacing"""
     # Print top Bar:
     print("Date\t", end="\t")
@@ -77,7 +80,7 @@ def print_calendar(data, eng=False):
         print()
 
 
-def main():
+def main() -> None:
     """main() function, parse arguments and call functions"""
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
