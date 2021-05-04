@@ -59,7 +59,7 @@ def format_color(s: str) -> str:
     else:
         return s
 
-def print_calendar(data: Dict, eng: bool = False):
+def print_calendar(data: Dict, eng: bool = False) -> None:
     """Print calendar as a table with appropriate spacing"""
     # Print top Bar:
     print("Date\t", end="\t")
