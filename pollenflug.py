@@ -10,12 +10,12 @@ from datetime import datetime
 import requests
 
 REQ_URL = "https://allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"
+ENG_LIST = ["Ambrosia","Dock","Artemisia","Birch","Beech","Oak","Alder","Ash","Grass","Hazel","Popplar","Rye","Elm","Plantain","Willow"]
 
 # Define input options
-SHORT_OPT = "d:p:hv"
-LONG_OPT  = ["date=", "plz=", "help", "verbose"]
+SHORT_OPT = "d:p:hve"
+LONG_OPT  = ["date=", "plz=", "help", "verbose", "english"]
 arg_list = sys.argv[1:]
-
 
 def print_help():
     """Print help menu with argument, usage, copyright and Github"""
@@ -24,7 +24,9 @@ def print_help():
     -h,--help               Print this help menu
     -d,--date=YYYY-MM-DD    Set start date of pollen calendar
     -p,--plz=iiiii          Set postal code/plz
+    -e,--english            Print plant names in English
     -v,--verbose            Print verbose
+
 
 By default, date is set to today and plz to Hamburg.
 Data is fetched from Hexal's Pollenflugkalendar.
@@ -54,12 +56,16 @@ def format_color(s):
     else:
         return s
 
-def print_calendar(data):
+def print_calendar(data, eng=False):
     """Print calendar as a table with appropriate spacing"""
     # Print top Bar:
     print("Date\t", end="\t")
-    for s in data["content"]["pollen"]:
-        print(s[:6], end="\t")
+    if eng:
+        for s in ENG_LIST:
+            print(s[:6], end="\t")
+    else:
+        for s in data["content"]["pollen"]:
+            print(s[:6], end="\t")
     print() # Newline
 
     # Loop, print for every date
@@ -77,6 +83,7 @@ def main():
     date = datetime.today().strftime("%Y-%m-%d")
     plz = 20095
     debug = False
+    eng_list = False
 
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
@@ -97,6 +104,8 @@ def main():
         elif arg in ("-h", "--help"):
             print_help()
             sys.exit(os.EX_OK)
+        elif arg in ("-e", "--english"):
+            eng_list = True
 
     req_load = {"datum": date, "plz": plz}
 
@@ -114,7 +123,7 @@ def main():
         sys.exit(os.EX_SOFTWARE)
 
     print("Data for " + str(plz) + ", Germany")
-    print_calendar(json_data)
+    print_calendar(json_data, eng=eng_list)
     sys.exit(os.EX_OK)
 
 
