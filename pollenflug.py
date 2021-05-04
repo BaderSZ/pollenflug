@@ -1,17 +1,19 @@
 #!/bin/env python3
 
-import sys, os, getopt
+# Command line args and exit codes
+import sys
+import os
+import getopt
 
+# HTTP requests and parsing
+from datetime import datetime
 import requests
 
-import json
-from datetime import datetime
-
-req_url = "https://allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"
+REQ_URL = "https://allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"
 
 # Define input options
-short_opt = "d:p:hv"
-long_opt  = ["date=", "plz=", "help", "verbose"]
+SHORT_OPT = "d:p:hv"
+LONG_OPT  = ["date=", "plz=", "help", "verbose"]
 arg_list = sys.argv[1:]
 
 
@@ -39,11 +41,12 @@ def format_color(s):
 
     if s == "0":
         return GREEN+s+ENDC
-    elif s == "1" or s == "2":
+    elif s in ("1", "2"):
         return ORANGE+s+ENDC
     elif s == "3":
         return RED+s+ENDC
-
+    else:
+        return s
 
 def print_calendar(data):
     # Print top Bar:
@@ -68,14 +71,14 @@ def main():
     debug = False
 
     try:
-        arguments, _val = getopt.getopt(arg_list, short_opt, long_opt)
+        arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
     except getopt.error as e:
         print("\033[91mError\033[0m: Invalid input arguments!")
         if debug:
             print(e)
         print_help()
         sys.exit(os.EX_USAGE)
-    
+
     for arg, val in arguments:
         if arg in ("-d", "--date"):
             date = val
@@ -90,7 +93,7 @@ def main():
     req_load = {"datum": date, "plz": plz}
 
     try:
-        r = requests.post(req_url,  params=req_load)
+        r = requests.post(REQ_URL,  params=req_load)
     except requests.exceptions.RequestException as e:
         print("\033[91mError\033[0m: Failed sending request.")
         if debug:
@@ -102,7 +105,7 @@ def main():
         print("\033[91mError\033[0m: Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
-    print("Data for " + plz + ", Germany")    
+    print("Data for " + plz + ", Germany")
     print_calendar(json_data)
     sys.exit(os.EX_OK)
 
