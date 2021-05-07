@@ -7,6 +7,8 @@ This script uses [Hexal's Pollenflugkalendar](https://allergie.hexal.de/pollenfl
 
 Currently, the intensity is printed as a numerical value between 0 and 3: 0 being none, 3 being severe.
 
+pollenflug currently supports a configuration file as `~/.pollenflug.ini`, with an example configuration included in the repo
+
 ## License
 
 The script is GPL-3.0
