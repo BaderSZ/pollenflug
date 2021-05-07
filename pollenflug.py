@@ -5,12 +5,19 @@ import sys
 import os
 import getopt
 
+# For dict/r.json type hinting
+from typing import Dict
+
+# Parser for INI config files and homedir
+import configparser
+from pathlib import Path
+
 # HTTP requests and parsing
 from datetime import datetime
 import requests
 
-# For dict/r.json type hinting
-from typing import Dict
+config = configparser.ConfigParser()
+config.read(str(Path.home()) + "/.pollenflug.ini")
 
 REQ_URL = "https://allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"
 ENG_LIST = ["Ambrosia","Dock","Artemisia","Birch","Beech","Oak","Alder","Ash","Grass","Hazel","Popplar","Rye","Elm","Plantain","Willow"]
@@ -84,9 +91,50 @@ def main() -> None:
     """main() function, parse arguments and call functions"""
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
-    plz = 20095
-    debug = False
-    eng_list = False
+
+    try:
+        plz = int(config['DEFAULT']['plz'])
+    except TypeError as e:
+        # plz not defined in config file, use default
+        plz = 20095
+    except ValueError as e:
+        print("\033[91mError\033[0m: invalid postal code in config!")
+        exit(os.EX_CONFIG)
+    except:
+        print("Unknown error, could not process postal code in config!")
+        exit(os.EX_CONFIG)
+
+    try:
+        debug_str = config['DEFAULT']['debug']
+        if debug_str in ("True", "true", "TRUE"):
+            debug = True
+        elif debug_str in ("False", "false", "FALSE"):
+            debug = False
+        else:
+            print("\033[91mError\033[0m: invalid debug flag in config!")
+            exit(os.EX_CONFIG)
+    except TypeError as e:
+        # Debug flag not defined, continue with default
+        debug = False
+    except:
+        print("\033[91mUnknown Error\033[0m: could not process debug flag in config")
+        exit(os.EX_CONFIG)
+
+    try:
+        eng = config['DEFAULT']['en']
+        if eng in ("True", "true", "TRUE"):
+            eng_list = True
+        elif eng in ("False", "false", "FALSE"):
+            eng_list = False
+        else:
+            print("\033[91mError\033[0m: invalid language flag in config!")
+            exit(os.EX_CONFIG)
+    except TypeError as e:
+        # Undefined language flag, continue with default
+        eng_list = False
+    except:
+        print("\033[91mUnknown Error\033[0m: could not process language flag in config")
+        exit(os.EX_CONFIG)
 
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
