@@ -99,10 +99,10 @@ def main() -> None:
         plz = 20095
     except ValueError as e:
         print("\033[91mError\033[0m: invalid postal code in config!")
-        exit(os.EX_CONFIG)
+        sys.exit(os.EX_CONFIG)
     except:
         print("Unknown error, could not process postal code in config!")
-        exit(os.EX_CONFIG)
+        sys.exit(os.EX_CONFIG)
 
     try:
         debug_str = config['DEFAULT']['debug']
@@ -112,13 +112,13 @@ def main() -> None:
             debug = False
         else:
             print("\033[91mError\033[0m: invalid debug flag in config!")
-            exit(os.EX_CONFIG)
+            sys.exit(os.EX_CONFIG)
     except TypeError as e:
         # Debug flag not defined, continue with default
         debug = False
     except:
         print("\033[91mUnknown Error\033[0m: could not process debug flag in config")
-        exit(os.EX_CONFIG)
+        sys.exit(os.EX_CONFIG)
 
     try:
         eng = config['DEFAULT']['en']
@@ -128,13 +128,13 @@ def main() -> None:
             eng_list = False
         else:
             print("\033[91mError\033[0m: invalid language flag in config!")
-            exit(os.EX_CONFIG)
+            sys.exit(os.EX_CONFIG)
     except TypeError as e:
         # Undefined language flag, continue with default
         eng_list = False
     except:
         print("\033[91mUnknown Error\033[0m: could not process language flag in config")
-        exit(os.EX_CONFIG)
+        sys.exit(os.EX_CONFIG)
 
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
