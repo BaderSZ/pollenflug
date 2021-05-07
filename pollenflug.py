@@ -92,6 +92,7 @@ def main() -> None:
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
 
+    # Check config file for postal code, and set appropriately
     try:
         plz = int(config['DEFAULT']['plz'])
     except TypeError as e:
@@ -104,6 +105,7 @@ def main() -> None:
         print("Unknown error, could not process postal code in config!")
         sys.exit(os.EX_CONFIG)
 
+    # Check config file for debug flag, and set appropriately
     try:
         debug_str = config['DEFAULT']['debug']
         if debug_str in ("True", "true", "TRUE"):
@@ -120,6 +122,7 @@ def main() -> None:
         print("\033[91mUnknown Error\033[0m: could not process debug flag in config")
         sys.exit(os.EX_CONFIG)
 
+    # Check config file for english flag, and set if given.
     try:
         eng = config['DEFAULT']['en']
         if eng in ("True", "true", "TRUE"):
@@ -136,6 +139,7 @@ def main() -> None:
         print("\033[91mUnknown Error\033[0m: could not process language flag in config")
         sys.exit(os.EX_CONFIG)
 
+    # Check CLI options, exit if undefined
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
     except getopt.error as e:
@@ -145,6 +149,7 @@ def main() -> None:
         print_help()
         sys.exit(os.EX_USAGE)
 
+    # Set CLI arguments.
     for arg, val in arguments:
         if arg in ("-d", "--date"):
             date = val
@@ -160,6 +165,7 @@ def main() -> None:
 
     req_load = {"datum": date, "plz": plz}
 
+    # Get data from HEXAL, exception if error
     try:
         r = requests.post(REQ_URL,  params=req_load)
     except requests.exceptions.RequestException as e:
@@ -173,6 +179,7 @@ def main() -> None:
         print("\033[91mError\033[0m: Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
+    # Print results
     print("Data for " + str(plz) + ", Germany")
     print_calendar(json_data, eng=eng_list)
     sys.exit(os.EX_OK)
