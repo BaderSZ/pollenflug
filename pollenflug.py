@@ -92,6 +92,7 @@ def main() -> None:
     """main() function, parse arguments and call functions"""
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
+    history = "no"
 
     # Check config file for postal code, and set appropriately
     try:
@@ -154,6 +155,7 @@ def main() -> None:
     for arg, val in arguments:
         if arg in ("-d", "--date"):
             date = val
+            history = "yes"
         elif arg in ("-p", "--plz"):
             plz = val
         elif arg in ("-v", "--verbose"):
@@ -164,7 +166,7 @@ def main() -> None:
         elif arg in ("-e", "--english"):
             eng_list = True
 
-    req_load = {"datum": date, "plz": plz}
+    req_load = {"datum": date, "plz": plz, "historie": history}
 
     # Get data from HEXAL, exception if error
     try:
