@@ -51,7 +51,7 @@ For bug reports and feature requests, see:
 https://github.com/BaderSZ/pollenflug""")
 
 
-def format_color(s: str) -> str:
+def format_color(s: str, color: int = 0) -> str:
     """Give each pollen value an appropriate color in the table"""
     GREEN = '\033[92m'
     ORANGE = '\033[93m'
@@ -84,7 +84,7 @@ def print_calendar(data: Dict, eng: bool = False) -> None:
         cdate = s
         print(cdate, end="\t")
         for v in data["content"]["values"][cdate]:
-            print(format_color(v), end="\t")
+            print(format_color(v, v), end="\t")
         print()
 
 
@@ -101,7 +101,7 @@ def main() -> None:
         # plz not defined in config file, use default
         plz = 20095
     except ValueError as e:
-        print("\033[91mError\033[0m: invalid postal code in config!")
+        print(format_color("Error") + ": invalid postal code in config!")
         sys.exit(os.EX_CONFIG)
     except:
         print("Unknown error, could not process postal code in config!")
@@ -115,13 +115,13 @@ def main() -> None:
         elif debug_str in ("False", "false", "FALSE"):
             debug = False
         else:
-            print("\033[91mError\033[0m: invalid debug flag in config!")
+            print(format_color("Error") + ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
     except TypeError as e:
         # Debug flag not defined, continue with default
         debug = False
     except:
-        print("\033[91mUnknown Error\033[0m: could not process debug flag in config")
+        print(format_color("Unknown Error")+ ": could not process debug flag in config")
         sys.exit(os.EX_CONFIG)
 
     # Check config file for english flag, and set if given.
@@ -132,20 +132,20 @@ def main() -> None:
         elif eng in ("False", "false", "FALSE"):
             eng_list = False
         else:
-            print("\033[91mError\033[0m: invalid language flag in config!")
+            print(format_color("Error") + ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
     except TypeError as e:
         # Undefined language flag, continue with default
         eng_list = False
     except:
-        print("\033[91mUnknown Error\033[0m: could not process language flag in config")
+        print(format_color("Unknown Error") + ": could not process language flag in config")
         sys.exit(os.EX_CONFIG)
 
     # Check CLI options, exit if undefined
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
     except getopt.error as e:
-        print("\033[91mError\033[0m: Invalid input arguments!")
+        print(format_color("Error") + ": Invalid input arguments!")
         if debug:
             print(e)
         print_help()
@@ -172,14 +172,14 @@ def main() -> None:
     try:
         r = requests.post(REQ_URL,  params=req_load)
     except requests.exceptions.RequestException as e:
-        print("\033[91mError\033[0m: Failed sending request.")
+        print(format_color("Error") + ": Failed sending request.")
         if debug:
             print(e)
         sys.exit(os.EX_SOFTWARE)
 
     json_data = r.json()
     if json_data["message"] != "success":
-        print("\033[91mError\033[0m: Server error. Check your arguments?")
+        print(format_color("Error") + ": Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
     # Print results
