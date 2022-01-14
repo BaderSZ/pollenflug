@@ -98,14 +98,14 @@ def print_calendar(data: Dict, eng: bool = False) -> None:
         print()  # Newline
 
 
-def loadconfig(config_location: str) -> (int, str, bool):
+def loadconfig(config_location: str) -> (int, bool, bool):
     """Function to check for a config file and check/load it."""
     # Load config file
     config = configparser.ConfigParser()
     config.read(config_location)
 
     if not Path(config_location).exists():
-        return 20095, "True", "False"
+        return 20095, True, False
 
     # Check config file for postal code, and set appropriately
     try:
@@ -122,10 +122,10 @@ def loadconfig(config_location: str) -> (int, str, bool):
 
     # Check config file for debug flag, and set appropriately
     try:
-        debug_str = config['DEFAULT']['debug']
-        if debug_str in ("True", "true", "TRUE", "1"):
+        debug_str = config['DEFAULT']['debug'].lower()
+        if debug_str in ("true", "1"):
             debug = True
-        elif debug_str in ("False", "false", "FALSE", "0", ""):
+        elif debug_str in ("false", "0", ""):
             debug = False
         else:
             print(format_color("Error", Color.RED) + ": invalid debug flag in config!")
@@ -136,11 +136,11 @@ def loadconfig(config_location: str) -> (int, str, bool):
 
     # Check config file for english flag, and set if given.
     try:
-        eng = config['DEFAULT']['en']
-        if eng in ("True", "true", "TRUE", "1"):
-            eng_list = True
-        elif eng in ("False", "false", "FALSE", "0", ""):
-            eng_list = False
+        eng = config['DEFAULT']['en'].lower()
+        if eng in ("true", "1"):
+            use_eng = True
+        elif eng in ("false", "0", ""):
+            use_eng = False
         else:
             print(format_color("Error", Color.RED) + ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
@@ -149,7 +149,7 @@ def loadconfig(config_location: str) -> (int, str, bool):
                 ": could not process language flag in config")
         sys.exit(os.EX_CONFIG)
 
-    return plz, eng_list, debug
+    return plz, use_eng, debug
 
 
 def main() -> None:
@@ -159,7 +159,7 @@ def main() -> None:
     history = "no"
 
     # Load config, with default values
-    plz, eng_list, debug = loadconfig(CONFIG_LOCATION)
+    plz, use_eng, debug = loadconfig(CONFIG_LOCATION)
 
     # Check CLI options, exit if undefined
     try:
@@ -184,7 +184,7 @@ def main() -> None:
             print_help()
             sys.exit(os.EX_OK)
         elif arg in ("-e", "--english"):
-            eng_list = True
+            use_eng = True
 
     req_load = {"datum": date, "plz": plz, "historie": history}
 
@@ -204,7 +204,7 @@ def main() -> None:
 
     # Print results
     print("Data for " + str(plz) + ", Germany")
-    print_calendar(json_data, eng=eng_list)
+    print_calendar(json_data, eng=use_eng)
     sys.exit(os.EX_OK)
 
 
