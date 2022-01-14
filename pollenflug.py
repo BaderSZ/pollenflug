@@ -31,6 +31,7 @@ arg_list = sys.argv[1:]
 # Config absolute directory
 CONFIG_LOCATION = str(Path.home()) + "/.pollenflug.ini"
 
+
 def print_help() -> None:
     """Print help menu with argument, usage, copyright and Github"""
     print("""Usage: pollenflug.py [options]
@@ -114,7 +115,8 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         # plz not defined in config file, use default
         plz = 20095
     except ValueError:
-        print(format_color("Error", Color.RED) + ": invalid postal code in config!")
+        print(format_color("Error", Color.RED) +
+              ": invalid postal code in config!")
         sys.exit(os.EX_CONFIG)
     except KeyError:
         print("Unknown error, could not process postal code in config!")
@@ -128,10 +130,12 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         elif debug_str in ("false", "0", ""):
             debug = False
         else:
-            print(format_color("Error", Color.RED) + ": invalid debug flag in config!")
+            print(format_color("Error", Color.RED) +
+                  ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(format_color("Unknown Error", Color.RED) + ": could not process debug flag in config")
+        print(format_color("Unknown Error", Color.RED) +
+              ": could not process debug flag in config")
         sys.exit(os.EX_CONFIG)
 
     # Check config file for english flag, and set if given.
@@ -142,11 +146,12 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         elif eng in ("false", "0", ""):
             use_eng = False
         else:
-            print(format_color("Error", Color.RED) + ": invalid language flag in config!")
+            print(format_color("Error", Color.RED) +
+                  ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(format_color("Unknown Error", Color.RED) + \
-                ": could not process language flag in config")
+        print(format_color("Unknown Error", Color.RED) +
+              ": could not process language flag in config")
         sys.exit(os.EX_CONFIG)
 
     return plz, use_eng, debug
@@ -199,7 +204,8 @@ def main() -> None:
 
     json_data = request.json()
     if json_data["message"] != "success":
-        print(format_color("Error", Color.RED) + ": Server error. Check your arguments?")
+        print(format_color("Error", Color.RED) +
+              ": Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
     # Print results
