@@ -125,14 +125,11 @@ def loadconfig(config_location: str) -> (int, str, bool):
         debug_str = config['DEFAULT']['debug']
         if debug_str in ("True", "true", "TRUE", "1"):
             debug = True
-        elif debug_str in ("False", "false", "FALSE", "0"):
+        elif debug_str in ("False", "false", "FALSE", "0", ""):
             debug = False
         else:
             print(format_color("Error", Color.RED) + ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
-    except TypeError:
-        # Debug flag not defined, continue with default
-        debug = False
     except KeyError:
         print(format_color("Unknown Error", Color.RED) + ": could not process debug flag in config")
         sys.exit(os.EX_CONFIG)
@@ -142,14 +139,11 @@ def loadconfig(config_location: str) -> (int, str, bool):
         eng = config['DEFAULT']['en']
         if eng in ("True", "true", "TRUE", "1"):
             eng_list = True
-        elif eng in ("False", "false", "FALSE", "0"):
+        elif eng in ("False", "false", "FALSE", "0", ""):
             eng_list = False
         else:
             print(format_color("Error", Color.RED) + ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
-    except TypeError:
-        # Undefined language flag, continue with default
-        eng_list = False
     except KeyError:
         print(format_color("Unknown Error", Color.RED) + \
                 ": could not process language flag in config")
@@ -164,6 +158,7 @@ def main() -> None:
     date = datetime.today().strftime("%Y-%m-%d")
     history = "no"
 
+    # Load config, with default values
     plz, eng_list, debug = loadconfig(CONFIG_LOCATION)
 
     # Check CLI options, exit if undefined
