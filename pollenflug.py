@@ -6,7 +6,7 @@ import os
 import getopt
 
 # For dict/r.json type hinting
-from typing import Dict, Type
+from typing import Dict, Type, TypeVar
 
 # Enum type for colors
 from enum import Enum
@@ -61,21 +61,25 @@ class Color(Enum):
     ORANGE, ORANGE_TOO = "1", "2"
     RED = "3"
 
+    def __str__(self):
+        return self.value
 
-def format_color(string: str, color: Type[Color]) -> str:
-    """Give each pollen value an appropriate color in the table"""
-    green = '\033[92m'
-    orange = '\033[93m'
-    red = '\033[91m'
-    endc = '\033[0m'
+    COLORT = TypeVar('ColorT', bound='Color')
+    @classmethod
+    def format_color(cls, string: str, color: Type[COLORT] = None) -> str:
+        """Give each pollen value an appropriate color in the table"""
+        green = '\033[92m'
+        orange = '\033[93m'
+        red = '\033[91m'
+        endc = '\033[0m'
 
-    if color == Color.GREEN:
-        return green + string + endc
-    if color in (Color.ORANGE, Color.ORANGE_TOO):
-        return orange + string + endc
-    if color == Color.RED:
-        return red + string + endc
-    return string
+        if color == cls.GREEN:
+            return green + string + endc
+        if color in (cls.ORANGE, cls.ORANGE_TOO):
+            return orange + string + endc
+        if color in (cls.RED, None):
+            return red + string + endc
+        return string
 
 
 def print_calendar(data: Dict, eng: bool = False) -> None:
@@ -90,12 +94,13 @@ def print_calendar(data: Dict, eng: bool = False) -> None:
             print(string[:6], end="\t")
     print()  # Newline
 
+
     # Loop, print for every date
     for string in data["content"]["values"]:
         cdate = string
         print(cdate, end="\t")
         for val in data["content"]["values"][cdate]:
-            print(format_color(val, Color(val)), end="\t")
+            print(Color.format_color(val, Color(val)), end="\t")
         print()  # Newline
 
 
@@ -115,7 +120,7 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         # plz not defined in config file, use default
         plz = 20095
     except ValueError:
-        print(format_color("Error", Color.RED) +
+        print(Color.format_color("Error") +
               ": invalid postal code in config!")
         sys.exit(os.EX_CONFIG)
     except KeyError:
@@ -130,11 +135,11 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         elif debug_str in ("false", "0", ""):
             debug = False
         else:
-            print(format_color("Error", Color.RED) +
+            print(Color.format_color("Error") +
                   ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(format_color("Unknown Error", Color.RED) +
+        print(Color.format_color("Unknown Error", Color.RED) +
               ": could not process debug flag in config")
         sys.exit(os.EX_CONFIG)
 
@@ -146,11 +151,11 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         elif eng in ("false", "0", ""):
             use_eng = False
         else:
-            print(format_color("Error", Color.RED) +
+            print(Color.format_color("Error") +
                   ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(format_color("Unknown Error", Color.RED) +
+        print(Color.format_color("Unknown Error") +
               ": could not process language flag in config")
         sys.exit(os.EX_CONFIG)
 
@@ -170,7 +175,7 @@ def main() -> None:
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
     except getopt.error as exp:
-        print(format_color("Error", Color.RED) + ": Invalid input arguments!")
+        print(Color.format_color("Error") + ": Invalid input arguments!")
         if debug:
             print(exp)
         print_help()
@@ -197,14 +202,14 @@ def main() -> None:
     try:
         request = requests.post(REQ_URL,  params=req_load)
     except requests.exceptions.RequestException as exp:
-        print(format_color("Error", Color.RED) + ": Failed sending request.")
+        print(Color.format_color("Error") + ": Failed sending request.")
         if debug:
             print(exp)
         sys.exit(os.EX_SOFTWARE)
 
     json_data = request.json()
     if json_data["message"] != "success":
-        print(format_color("Error", Color.RED) +
+        print(Color.format_color("Error") +
               ": Server error. Check your arguments?")
         sys.exit(os.EX_SOFTWARE)
 
