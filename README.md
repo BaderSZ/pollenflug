@@ -40,4 +40,3 @@ If you want to locally build and install this, then run:
 ## TODO
 * Replace numbers with strings or emojis
 * Add support for other countries
-* Translate names to English
