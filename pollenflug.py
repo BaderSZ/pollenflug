@@ -22,7 +22,11 @@ CONFIG_LOCATION = str(Path.home()) + "/.pollenflug.ini"
 
 
 def main() -> None:
-    """main() function, parse arguments and call functions"""
+    """main() function, parse arguments and call functions
+
+    Input Arguments: None
+    Returns: None
+    """
     # Default values
     date = datetime.today().strftime("%Y-%m-%d")
     history = "no"

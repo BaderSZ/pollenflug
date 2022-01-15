@@ -7,7 +7,18 @@ from enum import Enum
 
 
 class Color(Enum):
-    """Color class we can use to instead of literals"""
+    """Color Enum class we can use to instead of literals. Includes a format method.
+
+    Constants:
+        GREEN
+        ORANGE
+        ORANGE_TOO
+        RED
+
+    Methods:
+        __str__(self) -> str
+        format_color(cls, string: str, color: Type[COLORT] = None) ->str
+        """
     GREEN = "0"
     ORANGE, ORANGE_TOO = "1", "2"
     RED = "3"
@@ -19,7 +30,11 @@ class Color(Enum):
 
     @classmethod
     def format_color(cls, string: str, color: Type[COLORT] = None) -> str:
-        """Give each pollen value an appropriate color in the table"""
+        """Give each pollen value an appropriate color in the table
+
+        Input Arguments: `string` to colorise, and `Color` as defined in the parent class
+        Returns: `string` with additional ASCII color codes.
+        """
         green = '\033[92m'
         orange = '\033[93m'
         red = '\033[91m'

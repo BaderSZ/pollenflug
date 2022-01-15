@@ -1,4 +1,10 @@
-"""Functions set for pollenflug"""
+"""Functions set for pollenflug.
+
+Functions:
+    loadconfig(config_location): loads the config file, returns default values if not available.
+    print_help(): prints a standard help dialog.
+    def print_calendar(data, eng): loops through data received from request and prints.
+"""
 
 import sys
 import os
@@ -16,7 +22,11 @@ from color import Color
 
 
 def loadconfig(config_location: str) -> (int, bool, bool):
-    """Function to check for a config file and check/load it."""
+    """Loads the config file, returns default values if not available.
+
+    Input Arguments: absolute directory of the config file.
+    Returns: postal code, language flag and debug option.
+    """
     # Load config file
     config = configparser.ConfigParser()
     config.read(config_location)
@@ -74,7 +84,11 @@ def loadconfig(config_location: str) -> (int, bool, bool):
 
 
 def print_help() -> None:
-    """Print help menu with argument, usage, copyright and Github"""
+    """Print help menu with argument, usage, copyright and Github.
+
+    Input Arguments: None
+    Returns: None
+    """
     print("""Usage: pollenflug.py [options]
 
     -h,--help               Printimport sys
@@ -90,7 +104,7 @@ import getopt
 By default, date is set to today and plz to Hamburg.
 Data is fetched from Hexal's Pollenflugkalendar.
 
-pollenflug  Copyright (C) 2021  Bader Zaidan
+pollenflug  Copyright (C) 2022  Bader Zaidan
 This program comes with ABSOLUTELY NO WARRANTY;
 This is free software, and you are welcome to redistribute it
 under certain conditions; read LICENSE for details.
@@ -100,7 +114,11 @@ https://github.com/BaderSZ/pollenflug""")
 
 
 def print_calendar(data: Dict, eng: bool = False) -> None:
-    """Print calendar as a table with appropriate spacing"""
+    """Print calendar as a table with appropriate spacing.
+
+    Input Arguments: `data: dict` from URL request., language flag.
+    Returns: None.
+    """
     # Print top Bar:
     print("Date", end="\t\t")
     if eng:
