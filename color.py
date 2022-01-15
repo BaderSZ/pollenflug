@@ -16,6 +16,7 @@ class Color(Enum):
         return self.value
 
     COLORT = TypeVar('ColorT', bound='Color')
+
     @classmethod
     def format_color(cls, string: str, color: Type[COLORT] = None) -> str:
         """Give each pollen value an appropriate color in the table"""

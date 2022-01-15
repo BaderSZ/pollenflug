@@ -14,6 +14,7 @@ from pathlib import Path
 from consts import ENG_LIST
 from color import Color
 
+
 def loadconfig(config_location: str) -> (int, bool, bool):
     """Function to check for a config file and check/load it."""
     # Load config file
@@ -109,7 +110,6 @@ def print_calendar(data: Dict, eng: bool = False) -> None:
         for string in data["content"]["pollen"]:
             print(string[:6], end="\t")
     print()  # Newline
-
 
     # Loop, print for every date
     for string in data["content"]["values"]:
