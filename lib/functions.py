@@ -17,8 +17,8 @@ import configparser
 from pathlib import Path
 
 # local
-from consts import ENG_LIST
-from color import Color
+from .consts import ENG_LIST
+from .color import Color
 
 
 def loadconfig(config_location: str) -> (int, bool, bool):

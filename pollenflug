@@ -13,9 +13,9 @@ from datetime import datetime
 import requests
 
 # local
-from functions import loadconfig, print_calendar, print_help
-from consts import LONG_OPT, SHORT_OPT, REQ_URL
-from color import Color
+from lib.functions import loadconfig, print_calendar, print_help
+from lib.consts import LONG_OPT, SHORT_OPT, REQ_URL
+from lib.color import Color
 
 # Config absolute directory
 CONFIG_LOCATION = str(Path.home()) + "/.pollenflug.ini"
