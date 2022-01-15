@@ -1,5 +1,5 @@
 # pollenflug
-CLI pollen/allergy calendar
+## CLI pollen/allergy calendar
 
 ![Screenshot](img/screenshot.png)
 
@@ -13,7 +13,31 @@ pollenflug currently supports a configuration file as `~/.pollenflug.ini`, with 
 
 The script is GPL-3.0
 
-## Todo:
+## Requirements
+The requirements are available in `requirements.txt`. Install them:
+```
+	pip install -r requirements.txt
+```
+
+## INSTALL
+
+The application is available on pip. Run the following command to install locally:
+```
+	pip install --user pollenflug
+```
+or globally, with `sudo` if needed:
+```
+	sudo pip install pollenflug
+```
+
+If you want to locally build and install this, then run:
+```
+	python3 setup.py build
+	python3 setup.py install
+
+```
+
+## TODO
 * Replace numbers with strings or emojis
 * Add support for other countries
 * Translate names to English
