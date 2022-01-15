@@ -14,11 +14,15 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     url = "https://github.com/BaderSZ/pollenflug",
     packages=setuptools.find_packages(),
-    install_requires=['requests'],
+    platforms=["Linux", "Darwin", "Windows"],
+    license="GPLv3+",
+    license_files=["LICENSE"],
+    install_requires=["requests"],
     classifiers =[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
+        "Environment :: Console",
     ],
 )
