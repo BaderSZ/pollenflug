@@ -44,6 +44,6 @@ class Color(Enum):
             return green + string + endc
         if color in (cls.ORANGE, cls.ORANGE_TOO):
             return orange + string + endc
-        if color in (cls.RED, None):
+        if color == cls.RED:
             return red + string + endc
         return string
