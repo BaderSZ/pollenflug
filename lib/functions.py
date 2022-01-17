@@ -77,7 +77,6 @@ def loadconfig(config_location: str) -> (int, bool, bool):
         # Don't fail on undefined
         use_eng = False
 
-
     return plz, use_eng, debug
 
 
