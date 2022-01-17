@@ -27,25 +27,24 @@ def loadconfig(config_location: str) -> (int, bool, bool):
     Input Arguments: absolute directory of the config file.
     Returns: postal code, language flag and debug option.
     """
+
+    # Test if the file given exists. If not, return default vals.
+    if not Path(config_location).exists():
+        return 20095, True, False
+
     # Load config file
     config = configparser.ConfigParser()
     config.read(config_location)
 
-    if not Path(config_location).exists():
-        return 20095, True, False
-
     # Check config file for postal code, and set appropriately
     try:
         plz = int(config['DEFAULT']['plz'])
-    except TypeError:
+    except (TypeError, KeyError):
         # plz not defined in config file, use default
         plz = 20095
     except ValueError:
         print(Color.format_color("Error") +
               ": invalid postal code in config!")
-        sys.exit(os.EX_CONFIG)
-    except KeyError:
-        print("Unknown error, could not process postal code in config!")
         sys.exit(os.EX_CONFIG)
 
     # Check config file for debug flag, and set appropriately
@@ -60,9 +59,8 @@ def loadconfig(config_location: str) -> (int, bool, bool):
                   ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(Color.format_color("Unknown Error", Color.RED) +
-              ": could not process debug flag in config")
-        sys.exit(os.EX_CONFIG)
+        # Don't fail on undefined
+        debug = False
 
     # Check config file for english flag, and set if given.
     try:
@@ -76,9 +74,9 @@ def loadconfig(config_location: str) -> (int, bool, bool):
                   ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
-        print(Color.format_color("Unknown Error") +
-              ": could not process language flag in config")
-        sys.exit(os.EX_CONFIG)
+        # Don't fail on undefined
+        use_eng = False
+
 
     return plz, use_eng, debug
 
