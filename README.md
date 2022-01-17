@@ -1,7 +1,7 @@
 # pollenflug
 ## CLI pollen/allergy calendar
 
-![Screenshot](img/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/BaderSZ/pollenflug/master/img/screenshot.png)
 
 This script uses [Hexal's Pollenflugkalendar](https://allergie.hexal.de/pollenflug/vorhersage/) to fetch the predictions for the next week.
 
