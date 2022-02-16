@@ -88,10 +88,7 @@ def print_help() -> None:
     """
     print("""Usage: pollenflug.py [options]
 
-    -h,--help               Printimport sys
-import os
-import getopt
- this help menu
+    -h,--help               Print this help menu
     -d,--date=YYYY-MM-DD    Set start date of pollen calendar
     -p,--plz=iiiii          Set postal code/plz
     -e,--english            Print plant names in English
