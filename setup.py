@@ -5,7 +5,7 @@ with open ("README.md", "r") as f:
 
 setuptools.setup(
     name = "pollenflug",
-    version = "0.1",
+    version = "0.1.1",
     scripts = ["pollenflug"],
     author = "Bader Zaidan",
     author_email = "bader.zaidan@rwth-aachen.de",
