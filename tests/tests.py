@@ -34,6 +34,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(Color("3"), Color.RED)
 
         # Test some function colors
+        self.assertEqual(Color.format_color("Hello, nothing!"), "Hello, nothing!")
         self.assertEqual(Color.format_color(
             "Hello, Red!", Color.RED), "\033[91mHello, Red!\033[0m")
         self.assertEqual(Color.format_color(
