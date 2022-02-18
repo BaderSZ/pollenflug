@@ -19,7 +19,7 @@ setuptools.setup(
     license_files=["LICENSE"],
     install_requires=["requests"],
     requires=['requests'],
-    python_requires=">=3.5, !2",
+    python_requires=">=3.5, !=2",
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
