@@ -67,7 +67,7 @@ def main() -> None:
 
     # Get data from HEXAL, exception if error
     try:
-        request = requests.post(REQ_URL,  params=req_load)
+        request = requests.post(REQ_URL,  params=req_load,timeout=2)
     except requests.exceptions.RequestException as exp:
         print(Color.format_color("Error", Color.RED) +
               ": Failed sending request.")
