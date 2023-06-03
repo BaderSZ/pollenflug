@@ -6,10 +6,6 @@ authors = [
 ]
 description = "CLI allergy forecast tool"
 readme = "README.md"
-packages = [
-	{ include  = "pollenflug" },
-	{ include = "lib" }
-]
 homepage = "https://github.com/BaderSZ/pollenflug"
 repository = "https://github.com/BaderSZ/pollenflug"
 license = "GGPL-3.0-or-later"
@@ -31,6 +27,9 @@ requests = "^2.31.0"
 
 [tool.poetry.scripts]
 pollenflug = "pollenflug.pollenflug:main"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core"]
