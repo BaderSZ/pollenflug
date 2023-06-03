@@ -41,8 +41,7 @@ def main() -> None:
     try:
         arguments, _val = getopt.getopt(arg_list, SHORT_OPT, LONG_OPT)
     except getopt.error as exp:
-        print(Color.format_color("Error", Color.RED) +
-              ": Invalid input arguments!")
+        print(Color.format_color("Error", Color.RED) + ": Invalid input arguments!")
         if debug:
             print(exp)
         print_help()
@@ -67,10 +66,9 @@ def main() -> None:
 
     # Get data from HEXAL, exception if error
     try:
-        request = requests.post(REQ_URL,  params=req_load,timeout=2)
+        request = requests.post(REQ_URL, params=req_load, timeout=2)
     except requests.exceptions.RequestException as exp:
-        print(Color.format_color("Error", Color.RED) +
-              ": Failed sending request.")
+        print(Color.format_color("Error", Color.RED) + ": Failed sending request.")
 
         if debug:
             print(exp)
@@ -78,8 +76,10 @@ def main() -> None:
 
     json_data = request.json()
     if json_data["message"] != "success":
-        print(Color.format_color("Error", Color.RED) +
-              ": Server error. Check your arguments?")
+        print(
+            Color.format_color("Error", Color.RED)
+            + ": Server error. Check your arguments?"
+        )
         sys.exit(os.EX_SOFTWARE)
 
     # Print results

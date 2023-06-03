@@ -38,25 +38,23 @@ def loadconfig(config_location: str) -> (int, bool, bool):
 
     # Check config file for postal code, and set appropriately
     try:
-        plz = int(config['DEFAULT']['plz'])
+        plz = int(config["DEFAULT"]["plz"])
     except (TypeError, KeyError):
         # plz not defined in config file, use default
         plz = 20095
     except ValueError:
-        print(Color.format_color("Error") +
-              ": invalid postal code in config!")
+        print(Color.format_color("Error") + ": invalid postal code in config!")
         sys.exit(os.EX_CONFIG)
 
     # Check config file for debug flag, and set appropriately
     try:
-        debug_str = config['DEFAULT']['debug'].lower()
+        debug_str = config["DEFAULT"]["debug"].lower()
         if debug_str in ("true", "1"):
             debug = True
         elif debug_str in ("false", "0", ""):
             debug = False
         else:
-            print(Color.format_color("Error") +
-                  ": invalid debug flag in config!")
+            print(Color.format_color("Error") + ": invalid debug flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
         # Don't fail on undefined
@@ -64,14 +62,13 @@ def loadconfig(config_location: str) -> (int, bool, bool):
 
     # Check config file for english flag, and set if given.
     try:
-        eng = config['DEFAULT']['en'].lower()
+        eng = config["DEFAULT"]["en"].lower()
         if eng in ("true", "1"):
             use_eng = True
         elif eng in ("false", "0", ""):
             use_eng = False
         else:
-            print(Color.format_color("Error") +
-                  ": invalid language flag in config!")
+            print(Color.format_color("Error") + ": invalid language flag in config!")
             sys.exit(os.EX_CONFIG)
     except KeyError:
         # Don't fail on undefined
@@ -86,7 +83,8 @@ def print_help() -> None:
     Input Arguments: None
     Returns: None
     """
-    print("""Usage: pollenflug.py [options]
+    print(
+        """Usage: pollenflug.py [options]
 
     -h,--help               Print this help menu
     -d,--date=YYYY-MM-DD    Set start date of pollen calendar
@@ -104,7 +102,8 @@ This is free software, and you are welcome to redistribute it
 under certain conditions; read LICENSE for details.
 
 For bug reports and feature requests, see:
-https://github.com/BaderSZ/pollenflug""")
+https://github.com/BaderSZ/pollenflug"""
+    )
 
 
 def print_calendar(data: Dict, eng: bool = False) -> None:
