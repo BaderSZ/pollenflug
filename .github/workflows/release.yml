@@ -43,8 +43,10 @@ jobs:
         with:
           artifacts: "dist/*"
           draft: false
-
+          skipIfReleaseExists: true # Skip if release exists, as we still have to publish to pypi
+          
+    ## Do I really have to build again here?
       - name: Publish to PyPI
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+        run: poetry --build --no-interaction publish
