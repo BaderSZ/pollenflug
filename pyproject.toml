@@ -28,3 +28,10 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.7,<4"
 requests = "^2.31.0"
+
+[tool.poetry.scripts]
+pollenflug = "pollenflug.pollenflug:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

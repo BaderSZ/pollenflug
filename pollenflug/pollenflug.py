@@ -13,9 +13,9 @@ from datetime import datetime
 import requests
 
 # local
-from lib.functions import loadconfig, print_calendar, print_help
-from lib.consts import LONG_OPT, SHORT_OPT, REQ_URL
-from lib.color import Color
+from .lib.functions import loadconfig, print_calendar, print_help
+from .lib.consts import LONG_OPT, SHORT_OPT, REQ_URL
+from .lib.color import Color
 
 # Config absolute directory
 CONFIG_LOCATION = str(Path.home()) + "/.pollenflug.ini"
@@ -88,5 +88,5 @@ def main() -> None:
     sys.exit(os.EX_OK)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
