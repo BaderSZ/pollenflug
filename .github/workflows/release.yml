@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - "*"
-
+  
 jobs:
   release:
     name: Release
@@ -34,6 +34,9 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with=dev
+
+      - name: Build project
+        run: poetry build
 
       - name: Create Release
         uses: ncipollo/release-action@v1
