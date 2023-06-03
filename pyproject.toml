@@ -27,7 +27,6 @@ requests = "^2.31.0"
 
 [tool.poetry.scripts]
 pollenflug = "pollenflug.pollenflug:main"
-unittest = "tests.tests:run_unittests"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.5"
