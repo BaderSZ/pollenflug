@@ -1,6 +1,8 @@
 # pollenflug
 ## CLI pollen/allergy calendar
 
+[![Python package](https://github.com/BaderSZ/pollenflug/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/BaderSZ/pollenflug/actions/workflows/python-package.yml)
+
 ![Screenshot](https://raw.githubusercontent.com/BaderSZ/pollenflug/master/img/screenshot.png)
 
 This script uses [Hexal's Pollenflugkalendar](https://allergie.hexal.de/pollenflug/vorhersage/) to fetch the predictions for the next week.
