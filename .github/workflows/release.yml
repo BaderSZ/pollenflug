@@ -36,6 +36,10 @@ jobs:
           artifacts: "dist/*"
           draft: false
       - name: Publish to PyPI
+        uses: JRubics/poetry-publish@v1.16
+        with:
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          python_version: "3.11"
+          plugins: "poetry-dynamic-versioning[plugin]"
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
