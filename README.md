@@ -1,4 +1,9 @@
 # pollenflug
+
+## ARCHIVED
+
+Due to API changes and my allergies being cured, this project is being archives and will no longer be updated.
+
 ## CLI pollen/allergy calendar
 
 [![Python package](https://github.com/BaderSZ/pollenflug/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/BaderSZ/pollenflug/actions/workflows/python-package.yml)
